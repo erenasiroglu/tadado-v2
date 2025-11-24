@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "564074938700",
+    "project_id": "tadado-15d7a",
+    "storage_bucket": "tadado-15d7a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564074938700:android:e9f03f421c7703766d8fe9",
+        "android_client_info": {
+          "package_name": "com.tadado.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC22rvkhvbV0EMLQf3PcWYc8rCYEB7bp-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
