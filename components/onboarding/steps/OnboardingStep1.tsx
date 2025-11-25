@@ -1,15 +1,19 @@
 import { FONT_FAMILY } from "@/constants/fonts";
+import LottieView from "lottie-react-native";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export const OnboardingStep1: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
-          source={require("@/assets/images/onboarding_first.png")}
+        <LottieView
+          source={{
+            uri: "https://lottie.host/3d43da9b-3018-454f-a40f-a9df23c99869/GkEzcjiGpy.lottie",
+          }}
+          autoPlay
+          loop
           style={styles.image}
-          resizeMode="contain"
         />
       </View>
       <View style={styles.card}>
@@ -74,4 +78,3 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
   },
 });
-
