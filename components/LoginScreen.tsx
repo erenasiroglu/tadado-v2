@@ -2,6 +2,7 @@ import { FONT_FAMILY } from "@/constants/fonts";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 interface LoginScreenProps {
   onCreateAccount?: () => void;
@@ -16,31 +17,26 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
   onContinueAsGuest,
   isSigningIn = false,
 }) => {
+  const { t } = useTranslation();
+
   return (
-    <LinearGradient
-      colors={["#441063", "#2A0A3B"]}
-      style={styles.container}
-    >
+    <LinearGradient colors={["#441063", "#2A0A3B"]} style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.welcomeText}>WELCOME</Text>
-          <Text style={styles.subtitleText}>Log In Or Sign Up To Continue</Text>
+          <Text style={styles.welcomeText}>{t("welcome")}</Text>
+          <Text style={styles.subtitleText}>{t("login_screen_subtitle")}</Text>
         </View>
 
         <View style={styles.bottomSection}>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={onCreateAccount}
-              activeOpacity={0.8}
-            >
+            <TouchableOpacity style={styles.button} onPress={onCreateAccount} activeOpacity={0.8}>
               <LinearGradient
                 colors={["#B47FE9", "#FFD17A"]}
                 style={styles.buttonGradient}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text style={styles.buttonText}>Create an account</Text>
+                <Text style={styles.buttonText}>{t("create_account")}</Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -55,7 +51,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text style={styles.buttonText}>Already have an account</Text>
+                <Text style={styles.buttonText}>{t("already_have_account")}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -69,7 +65,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
             {isSigningIn ? (
               <ActivityIndicator size="small" color="#ADADAD" />
             ) : (
-              <Text style={styles.guestText}>Continue As A Guest?</Text>
+              <Text style={styles.guestText}>{t("continue_as_guest")}</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -149,4 +145,3 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
   },
 });
-

@@ -15,10 +15,7 @@ export const OnboardingButton: React.FC<OnboardingButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      style={[
-        styles.button,
-        variant === "primary" ? styles.primaryButton : styles.secondaryButton,
-      ]}
+      style={[styles.button, variant === "primary" ? styles.primaryButton : styles.secondaryButton]}
       onPress={onPress}
       activeOpacity={0.8}
     >
@@ -63,4 +60,3 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
-

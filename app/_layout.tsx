@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { ChauPhilomeneOne_400Regular } from "@expo-google-fonts/chau-philomene-one";
 import * as SplashScreen from "expo-splash-screen";
+import "@/utils/i18n";
 
 SplashScreen.preventAutoHideAsync();
 

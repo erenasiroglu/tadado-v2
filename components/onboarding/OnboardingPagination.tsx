@@ -15,10 +15,7 @@ export const OnboardingPagination: React.FC<OnboardingPaginationProps> = ({
       {Array.from({ length: totalSteps }).map((_, index) => (
         <View
           key={index}
-          style={[
-            styles.dot,
-            index === currentStep ? styles.activeDot : styles.inactiveDot,
-          ]}
+          style={[styles.dot, index === currentStep ? styles.activeDot : styles.inactiveDot]}
         />
       ))}
     </View>
@@ -44,4 +41,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#D9D9D9",
   },
 });
-

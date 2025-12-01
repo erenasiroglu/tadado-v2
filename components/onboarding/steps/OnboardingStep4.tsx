@@ -36,9 +36,7 @@ export const OnboardingStep4: React.FC = () => {
         />
       </View>
       <View style={styles.content}>
-        <Text style={styles.title}>
-          HOW TO PLAY{"\n"}TaDaDo?
-        </Text>
+        <Text style={styles.title}>HOW TO PLAY{"\n"}TaDaDo?</Text>
         <View style={styles.buttonsContainer}>
           {steps.map((step, index) => (
             <View key={index} style={styles.button}>
@@ -129,4 +127,3 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
   },
 });
-

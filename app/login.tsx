@@ -3,6 +3,7 @@ import { supabase } from "@/utils/supabase";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Alert,
@@ -17,6 +18,7 @@ import {
 } from "react-native";
 
 export default function LoginScreen() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,15 +26,15 @@ export default function LoginScreen() {
 
   const validateForm = () => {
     if (!email.trim()) {
-      Alert.alert("Hata", "E-posta adresi gereklidir.");
+      Alert.alert(t("error"), t("email_required"));
       return false;
     }
     if (!email.includes("@")) {
-      Alert.alert("Hata", "Geçerli bir e-posta adresi giriniz.");
+      Alert.alert(t("error"), t("email_invalid"));
       return false;
     }
     if (!password) {
-      Alert.alert("Hata", "Şifre gereklidir.");
+      Alert.alert(t("error"), t("password_required"));
       return false;
     }
     return true;
@@ -49,7 +51,7 @@ export default function LoginScreen() {
       });
 
       if (error) {
-        Alert.alert("Giriş Hatası", error.message);
+        Alert.alert(t("login_error"), error.message);
         return;
       }
 
@@ -58,7 +60,7 @@ export default function LoginScreen() {
       }
     } catch (error) {
       console.error("Login error:", error);
-      Alert.alert("Hata", "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
+      Alert.alert(t("error"), t("login_unexpected_error"));
     } finally {
       setIsLoading(false);
     }
@@ -75,21 +77,18 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-
           <View style={styles.content}>
             <View style={styles.header}>
-              <Text style={styles.title}>Login</Text>
-              <Text style={styles.subtitle}>
-                Welcome back!
-              </Text>
+              <Text style={styles.title}>{t("login_title")}</Text>
+              <Text style={styles.subtitle}>{t("login_subtitle")}</Text>
             </View>
 
             <View style={styles.form}>
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>E-mail Address</Text>
+                <Text style={styles.label}>{t("email_label")}</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="ornek@email.com"
+                  placeholder={t("email_placeholder")}
                   placeholderTextColor="#ADADAD"
                   value={email}
                   onChangeText={setEmail}
@@ -101,11 +100,11 @@ export default function LoginScreen() {
               </View>
 
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Password</Text>
+                <Text style={styles.label}>{t("password_label")}</Text>
                 <View style={styles.passwordContainer}>
                   <TextInput
                     style={styles.passwordInput}
-                    placeholder="Enter your password"
+                    placeholder={t("password_placeholder")}
                     placeholderTextColor="#ADADAD"
                     value={password}
                     onChangeText={setPassword}
@@ -119,9 +118,7 @@ export default function LoginScreen() {
                     onPress={() => setShowPassword(!showPassword)}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.eyeButtonText}>
-                      {showPassword ? "👁️" : "👁️‍🗨️"}
-                    </Text>
+                    <Text style={styles.eyeButtonText}>{showPassword ? "👁️" : "👁️‍🗨️"}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -129,14 +126,11 @@ export default function LoginScreen() {
               <TouchableOpacity
                 style={styles.forgotPassword}
                 onPress={() => {
-                  Alert.alert(
-                    "Şifremi Unuttum",
-                    "Şifre sıfırlama özelliği yakında eklenecek."
-                  );
+                  Alert.alert(t("forgot_password_title"), t("forgot_password_message"));
                 }}
                 activeOpacity={0.7}
               >
-                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                <Text style={styles.forgotPasswordText}>{t("forgot_password_link")}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -154,18 +148,15 @@ export default function LoginScreen() {
                   {isLoading ? (
                     <ActivityIndicator size="small" color="#FFFFFF" />
                   ) : (
-                    <Text style={styles.submitButtonText}>Login</Text>
+                    <Text style={styles.submitButtonText}>{t("login_submit")}</Text>
                   )}
                 </LinearGradient>
               </TouchableOpacity>
 
               <View style={styles.footer}>
-                <Text style={styles.footerText}>Don't have an account? </Text>
-                <TouchableOpacity
-                  onPress={() => router.push("/signup")}
-                  activeOpacity={0.7}
-                >
-                  <Text style={styles.footerLink}>Create an account</Text>
+                <Text style={styles.footerText}>{t("no_account")}</Text>
+                <TouchableOpacity onPress={() => router.push("/signup")} activeOpacity={0.7}>
+                  <Text style={styles.footerLink}>{t("create_account")}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -311,4 +302,3 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 });
-

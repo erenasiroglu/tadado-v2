@@ -63,9 +63,9 @@ export default function SignUpScreen() {
 
       router.push({
         pathname: "/verify-otp",
-        params: { 
+        params: {
           email: email.trim(),
-          password: password, 
+          password: password,
           isSignUp: "true",
         },
       });
@@ -139,9 +139,7 @@ export default function SignUpScreen() {
                     onPress={() => setShowPassword(!showPassword)}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.eyeButtonText}>
-                      {showPassword ? "👁️" : "👁️‍🗨️"}
-                    </Text>
+                    <Text style={styles.eyeButtonText}>{showPassword ? "👁️" : "👁️‍🗨️"}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -165,9 +163,7 @@ export default function SignUpScreen() {
                     onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.eyeButtonText}>
-                      {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
-                    </Text>
+                    <Text style={styles.eyeButtonText}>{showConfirmPassword ? "👁️" : "👁️‍🗨️"}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -194,10 +190,7 @@ export default function SignUpScreen() {
 
               <View style={styles.footer}>
                 <Text style={styles.footerText}>Zaten hesabınız var mı? </Text>
-                <TouchableOpacity
-                  onPress={() => router.push("/login")}
-                  activeOpacity={0.7}
-                >
+                <TouchableOpacity onPress={() => router.push("/login")} activeOpacity={0.7}>
                   <Text style={styles.footerLink}>Giriş Yap</Text>
                 </TouchableOpacity>
               </View>
@@ -336,4 +329,3 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 });
-

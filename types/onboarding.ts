@@ -8,4 +8,3 @@ export interface OnboardingStep {
 export interface OnboardingProps {
   onComplete: () => void;
 }
-

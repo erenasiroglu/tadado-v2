@@ -18,11 +18,9 @@ export const OnboardingStep1: React.FC = () => {
       </View>
       <View style={styles.card}>
         <Text style={styles.welcomeTitle}>
-          WELCOME{"\n"}TO{"\n"}TaDaDo!
+          WELCOME{"\n"}TO{"\n"}TADADO!
         </Text>
-        <Text style={styles.subtitle}>
-          Choose which game{"\n"}you want to play!
-        </Text>
+        <Text style={styles.subtitle}>Choose which game{"\n"}you want to play!</Text>
       </View>
     </View>
   );

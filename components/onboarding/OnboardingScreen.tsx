@@ -8,11 +8,11 @@ import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "r
 import { OnboardingButton } from "./OnboardingButton";
 import { OnboardingPagination } from "./OnboardingPagination";
 import {
-    OnboardingStep1,
-    OnboardingStep2,
-    OnboardingStep3,
-    OnboardingStep4,
-    OnboardingStep5,
+  OnboardingStep1,
+  OnboardingStep2,
+  OnboardingStep3,
+  OnboardingStep4,
+  OnboardingStep5,
 } from "./steps";
 
 export const OnboardingScreen: React.FC<OnboardingProps> = ({ onComplete }) => {
@@ -67,20 +67,13 @@ export const OnboardingScreen: React.FC<OnboardingProps> = ({ onComplete }) => {
       )}
       <SafeAreaView style={styles.safeArea}>
         {!isFirstStep && (
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={handlePrevious}
-            activeOpacity={0.7}
-          >
+          <TouchableOpacity style={styles.backButton} onPress={handlePrevious} activeOpacity={0.7}>
             <Ionicons name="arrow-back" size={30} color="#FFFFFF" />
           </TouchableOpacity>
         )}
         {!isLastStep && (
           <TouchableOpacity
-            style={[
-              styles.skipButton,
-              isThirdStep && styles.skipButtonThirdStep,
-            ]}
+            style={[styles.skipButton, isThirdStep && styles.skipButtonThirdStep]}
             onPress={handleSkip}
             activeOpacity={0.8}
           >
@@ -96,28 +89,16 @@ export const OnboardingScreen: React.FC<OnboardingProps> = ({ onComplete }) => {
 
         {!isLastStep && (
           <View style={styles.footer}>
-            {currentStep === 1 && (
-              <Text style={styles.playInYourStyle}>Play in your style!</Text>
-            )}
-            <OnboardingPagination
-              totalSteps={ONBOARDING_STEPS.length}
-              currentStep={currentStep}
-            />
+            {currentStep === 1 && <Text style={styles.playInYourStyle}>Play in your style!</Text>}
+            <OnboardingPagination totalSteps={ONBOARDING_STEPS.length} currentStep={currentStep} />
             <View style={styles.buttonContainer}>
-              <OnboardingButton
-                title="İleri"
-                onPress={handleNext}
-                variant="primary"
-              />
+              <OnboardingButton title="İleri" onPress={handleNext} variant="primary" />
             </View>
           </View>
         )}
         {isLastStep && (
           <View style={styles.footer}>
-            <OnboardingPagination
-              totalSteps={ONBOARDING_STEPS.length}
-              currentStep={currentStep}
-            />
+            <OnboardingPagination totalSteps={ONBOARDING_STEPS.length} currentStep={currentStep} />
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.getStartedButton}
@@ -220,4 +201,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-

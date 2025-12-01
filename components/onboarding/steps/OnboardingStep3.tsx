@@ -3,12 +3,7 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export const OnboardingStep3: React.FC = () => {
-  const categories = [
-    "Classic Fun",
-    "Dirty Minds",
-    "Your Own Style",
-    "Create your Own Deck",
-  ];
+  const categories = ["Classic Fun", "Dirty Minds", "Your Own Style", "Create your Own Deck"];
 
   return (
     <View style={styles.container}>
@@ -26,11 +21,7 @@ export const OnboardingStep3: React.FC = () => {
         </View>
         <View style={styles.buttonsContainer}>
           {categories.map((category, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.button}
-              activeOpacity={0.8}
-            >
+            <TouchableOpacity key={index} style={styles.button} activeOpacity={0.8}>
               <View style={styles.buttonLeft}>
                 <Text style={styles.buttonText}>{category}</Text>
               </View>
@@ -122,4 +113,3 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
   },
 });
-

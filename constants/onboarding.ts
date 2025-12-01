@@ -14,7 +14,8 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     id: 3,
     title: "Güvenli Platform",
-    description: "Verileriniz bizim için önemli. En yüksek güvenlik standartlarıyla korunuyorsunuz.",
+    description:
+      "Verileriniz bizim için önemli. En yüksek güvenlik standartlarıyla korunuyorsunuz.",
   },
   {
     id: 4,
@@ -29,4 +30,3 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
 ];
 
 export const ONBOARDING_GRADIENT_COLORS = ["#F8B22F", "#FFD17B"];
-

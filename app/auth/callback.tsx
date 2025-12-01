@@ -22,7 +22,7 @@ export default function AuthCallback() {
         const url = await Linking.getInitialURL();
         if (url) {
           const parsed = Linking.parse(url);
-    
+
           const hash = url.split("#")[1];
           if (hash) {
             const hashParams: Record<string, string> = {};
@@ -32,14 +32,13 @@ export default function AuthCallback() {
                 hashParams[key] = decodeURIComponent(value);
               }
             });
-            
+
             if (hashParams.access_token && hashParams.refresh_token) {
               await processTokens(hashParams);
               return;
             }
           }
-          
-    
+
           if (parsed.queryParams) {
             const accessToken = parsed.queryParams.access_token as string;
             const refreshToken = parsed.queryParams.refresh_token as string;
@@ -87,17 +86,12 @@ export default function AuthCallback() {
     }
 
     if (data?.session) {
-
-      Alert.alert(
-        "Başarılı",
-        "E-posta adresiniz doğrulandı! Giriş yapabilirsiniz.",
-        [
-          {
-            text: "Tamam",
-            onPress: () => router.replace("/"),
-          },
-        ]
-      );
+      Alert.alert("Başarılı", "E-posta adresiniz doğrulandı! Giriş yapabilirsiniz.", [
+        {
+          text: "Tamam",
+          onPress: () => router.replace("/"),
+        },
+      ]);
     }
   };
 
@@ -126,4 +120,3 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
-

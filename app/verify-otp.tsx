@@ -21,7 +21,7 @@ export default function VerifyOTPScreen() {
   const email = (params.email as string) || "";
   const password = (params.password as string) || "";
   const isSignUp = params.isSignUp === "false";
-  
+
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
@@ -66,7 +66,7 @@ export default function VerifyOTPScreen() {
 
   const handleVerify = async (otpCode?: string) => {
     const otpCodeToVerify = otpCode || otp.join("");
-    
+
     if (otpCodeToVerify.length !== 6) {
       Alert.alert("Hata", "Lütfen 6 haneli kodu giriniz.");
       return;
@@ -103,8 +103,8 @@ export default function VerifyOTPScreen() {
 
         Alert.alert(
           "Başarılı",
-          isSignUp 
-            ? "Hesabınız oluşturuldu ve e-posta adresiniz doğrulandı!" 
+          isSignUp
+            ? "Hesabınız oluşturuldu ve e-posta adresiniz doğrulandı!"
             : "E-posta adresiniz doğrulandı! Giriş yapabilirsiniz.",
           [
             {
@@ -194,15 +194,10 @@ export default function VerifyOTPScreen() {
                   ref={(ref) => {
                     inputRefs.current[index] = ref;
                   }}
-                  style={[
-                    styles.otpInput,
-                    digit ? styles.otpInputFilled : null,
-                  ]}
+                  style={[styles.otpInput, digit ? styles.otpInputFilled : null]}
                   value={digit}
                   onChangeText={(value) => handleOtpChange(value, index)}
-                  onKeyPress={({ nativeEvent }) =>
-                    handleKeyPress(nativeEvent.key, index)
-                  }
+                  onKeyPress={({ nativeEvent }) => handleKeyPress(nativeEvent.key, index)}
                   keyboardType="number-pad"
                   maxLength={1}
                   selectTextOnFocus
@@ -351,4 +346,3 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
   },
 });
-
