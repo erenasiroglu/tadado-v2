@@ -7,13 +7,7 @@ import React, { useState } from "react";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { OnboardingButton } from "./OnboardingButton";
 import { OnboardingPagination } from "./OnboardingPagination";
-import {
-  OnboardingStep1,
-  OnboardingStep2,
-  OnboardingStep3,
-  OnboardingStep4,
-  OnboardingStep5,
-} from "./steps";
+import { OnboardingStep1, OnboardingStep3, OnboardingStep5 } from "./steps";
 
 export const OnboardingScreen: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -31,15 +25,10 @@ export const OnboardingScreen: React.FC<OnboardingProps> = ({ onComplete }) => {
   };
 
   const isLastStep = currentStep === ONBOARDING_STEPS.length - 1;
-  const isThirdStep = currentStep === 2;
-  const isFourthStep = currentStep === 3;
-  const isFifthStep = currentStep === 4;
+  const isSecondStep = currentStep === 1;
   const isFirstStep = currentStep === 0;
 
   const getGradientColors = () => {
-    if (isFourthStep) {
-      return ["#FFD17BDE", "#D5B1F2"] as [string, string];
-    }
     return ONBOARDING_GRADIENT_COLORS as [string, string];
   };
 
@@ -51,19 +40,44 @@ export const OnboardingScreen: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   return (
     <View style={styles.container}>
-      {isFifthStep ? (
-        <Image
-          source={require("@/assets/images/onboarding_fourth.png")}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-        />
-      ) : (
+      {isLastStep ? (
+        <>
+          <LinearGradient
+            colors={["#FFD17B", "#38145D"]}
+            locations={[0.47, 1]}
+            style={styles.step5Background}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+          />
+          <Image
+            source={require("@/assets/images/group_49.png")}
+            style={styles.step5TopImage}
+            resizeMode="cover"
+          />
+        </>
+      ) : !isSecondStep ? (
         <LinearGradient
           colors={getGradientColors()}
           style={styles.gradientBackground}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
         />
+      ) : null}
+      {currentStep === 1 && (
+        <>
+          <LinearGradient
+            colors={["#FFD17B", "#5D022C"]}
+            locations={[0.47, 1]}
+            style={styles.step3Background}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+          />
+          <Image
+            source={require("@/assets/images/group_26.png")}
+            style={styles.step3TopImage}
+            resizeMode="cover"
+          />
+        </>
       )}
       <SafeAreaView style={styles.safeArea}>
         {!isFirstStep && (
@@ -71,43 +85,37 @@ export const OnboardingScreen: React.FC<OnboardingProps> = ({ onComplete }) => {
             <Ionicons name="arrow-back" size={30} color="#FFFFFF" />
           </TouchableOpacity>
         )}
-        {!isLastStep && (
-          <TouchableOpacity
-            style={[styles.skipButton, isThirdStep && styles.skipButtonThirdStep]}
-            onPress={handleSkip}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.skipButtonText}>SKIP</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={[
+            styles.skipButton,
+            isSecondStep && styles.skipButtonSecondStep,
+            isLastStep && styles.doneButton,
+          ]}
+          onPress={handleSkip}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.skipButtonText}>{isLastStep ? "DONE!" : "SKIP"}</Text>
+        </TouchableOpacity>
 
         {currentStep === 0 && <OnboardingStep1 />}
-        {currentStep === 1 && <OnboardingStep2 />}
-        {currentStep === 2 && <OnboardingStep3 />}
-        {currentStep === 3 && <OnboardingStep4 />}
-        {currentStep === 4 && <OnboardingStep5 />}
+        {currentStep === 1 && <OnboardingStep3 />}
+        {currentStep === 2 && <OnboardingStep5 />}
 
         {!isLastStep && (
           <View style={styles.footer}>
-            {currentStep === 1 && <Text style={styles.playInYourStyle}>Play in your style!</Text>}
             <OnboardingPagination totalSteps={ONBOARDING_STEPS.length} currentStep={currentStep} />
             <View style={styles.buttonContainer}>
-              <OnboardingButton title="İleri" onPress={handleNext} variant="primary" />
+              <OnboardingButton
+                title="İleri"
+                onPress={handleNext}
+                variant={isSecondStep ? "secondary" : "primary"}
+              />
             </View>
           </View>
         )}
         {isLastStep && (
           <View style={styles.footer}>
             <OnboardingPagination totalSteps={ONBOARDING_STEPS.length} currentStep={currentStep} />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.getStartedButton}
-                onPress={onComplete}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.getStartedText}>Get Started!</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         )}
       </SafeAreaView>
@@ -135,6 +143,39 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     position: "relative",
+    zIndex: 10,
+  },
+  step3Background: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    top: 0,
+    left: 0,
+    zIndex: 0,
+  },
+  step3TopImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    top: 0,
+    left: 0,
+    zIndex: 1,
+  },
+  step5Background: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    top: 0,
+    left: 0,
+    zIndex: 0,
+  },
+  step5TopImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    top: 0,
+    left: 0,
+    zIndex: 1,
   },
   backButton: {
     position: "absolute",
@@ -158,8 +199,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 10,
   },
-  skipButtonThirdStep: {
-    backgroundColor: "#fedb59",
+  skipButtonSecondStep: {
+    backgroundColor: "#D39079",
+  },
+  doneButton: {
+    backgroundColor: "#D39079",
   },
   skipButtonText: {
     fontSize: 20,
@@ -171,12 +215,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingHorizontal: 20,
     gap: 32,
-  },
-  playInYourStyle: {
-    fontSize: 25,
-    color: "#38145D",
-    fontFamily: FONT_FAMILY,
-    textAlign: "center",
   },
   buttonContainer: {
     alignItems: "center",

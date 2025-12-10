@@ -1,33 +1,32 @@
 import { FONT_FAMILY } from "@/constants/fonts";
+import LottieView from "lottie-react-native";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 export const OnboardingStep3: React.FC = () => {
-  const categories = ["Classic Fun", "Dirty Minds", "Your Own Style", "Create your Own Deck"];
-
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={require("@/assets/images/onboarding_second.png")}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      </View>
       <View style={styles.content}>
-        <View style={styles.topSection}>
-          <Text style={styles.title}>Explore TaDaDo!</Text>
-          <Text style={styles.subtitle}>pick your card category to play</Text>
+        <View style={styles.categoryBar}>
+          <View style={styles.barFilled}>
+            <Text style={styles.barText}>Dirty Minds(+18)</Text>
+          </View>
+          <View style={styles.barEmpty} />
         </View>
-        <View style={styles.buttonsContainer}>
-          {categories.map((category, index) => (
-            <TouchableOpacity key={index} style={styles.button} activeOpacity={0.8}>
-              <View style={styles.buttonLeft}>
-                <Text style={styles.buttonText}>{category}</Text>
-              </View>
-              <View style={styles.buttonRight} />
-            </TouchableOpacity>
-          ))}
+        <View>
+          <Image
+            source={require("@/assets/images/components_1.png")}
+            style={styles.cardsImage}
+            resizeMode="contain"
+          />
+          <LottieView
+            source={{
+              uri: "https://lottie.host/85cd89ca-2684-4247-a5b1-96cf375f7ded/kJV9S3lrcU.lottie",
+            }}
+            autoPlay
+            loop
+            style={styles.lottieAnimation}
+          />
         </View>
       </View>
     </View>
@@ -37,79 +36,53 @@ export const OnboardingStep3: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: "relative",
-  },
-  imageContainer: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    zIndex: 0,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
+    zIndex: 2,
   },
   content: {
     flex: 1,
-    paddingTop: 120,
+    paddingTop: 60,
     paddingHorizontal: 20,
-    paddingBottom: 20,
-    zIndex: 1,
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
+    gap: 80,
   },
-  topSection: {
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 40,
-    fontWeight: "700",
-    color: "#38145D",
-    textAlign: "center",
-    marginBottom: 4,
-    fontFamily: FONT_FAMILY,
-  },
-  subtitle: {
-    fontSize: 25,
-    color: "#38145D",
-    textAlign: "center",
-    fontFamily: FONT_FAMILY,
-    textShadowColor: "rgba(0, 0, 0, 0.3)",
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
-  },
-  buttonsContainer: {
-    width: "100%",
-    alignItems: "center",
-    gap: 16,
-    marginBottom: 40,
-  },
-  button: {
+  categoryBar: {
     width: 354,
     height: 36,
     borderRadius: 30,
     flexDirection: "row",
     overflow: "hidden",
   },
-  buttonLeft: {
+  barFilled: {
     width: "90%",
-    backgroundColor: "#EFDCFE",
+    backgroundColor: "#A12638",
     borderTopLeftRadius: 30,
     borderBottomLeftRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    paddingLeft: 16,
   },
-  buttonRight: {
+  barEmpty: {
     width: "10%",
-    backgroundColor: "#683f5e",
+    backgroundColor: "#5D022C",
     borderTopRightRadius: 30,
     borderBottomRightRadius: 30,
   },
-  buttonText: {
+  barText: {
     fontSize: 25,
-    fontWeight: "400",
-    color: "#38145D",
+    fontWeight: "700",
+    color: "#FFFFFF",
     fontFamily: FONT_FAMILY,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  cardsImage: {
+    width: 320,
+    height: 200,
+  },
+  lottieAnimation: {
+    width: 300,
+    height: 300,
+    marginTop: -20,
   },
 });
