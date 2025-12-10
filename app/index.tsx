@@ -1,5 +1,9 @@
+import { GameScreen } from "@/components/GameScreen";
+import { GameSettingsScreen } from "@/components/GameSettingsScreen";
 import { LoginScreen } from "@/components/LoginScreen";
 import { OnboardingScreen } from "@/components/onboarding/OnboardingScreen";
+import { SettingsScreen } from "@/components/SettingsScreen";
+import { gameService } from "@/utils/gameService";
 import { FONT_FAMILY } from "@/constants/fonts";
 import { supabase } from "@/utils/supabase";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,6 +26,18 @@ export default function Index() {
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
   const [showHome, setShowHome] = useState(false);
+  const [showGameSettings, setShowGameSettings] = useState(false);
+  const [showGame, setShowGame] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [selectedCardTypeId, setSelectedCardTypeId] = useState<string | null>(null);
+  const [gameSettings, setGameSettings] = useState<{
+    cardTypeId: string;
+    team1: string;
+    team2: string;
+    gameTime: number;
+    rounds: number;
+    passLimit: number;
+  } | null>(null);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [userName, setUserName] = useState<string>("");
@@ -150,6 +166,50 @@ export default function Index() {
     ]);
   };
 
+  const handleSeriesCardPress = async () => {
+    try {
+      // SERIES kart tipinin ID'sini bul
+      const cardTypes = await gameService.getCardTypes();
+      const seriesCardType = cardTypes.find((ct) => ct.name === "SERIES");
+      if (seriesCardType) {
+        setSelectedCardTypeId(seriesCardType.id);
+        setShowGameSettings(true);
+      } else {
+        Alert.alert("Error", "SERIES card type not found");
+      }
+    } catch (error) {
+      console.error("Error loading card types:", error);
+      Alert.alert("Error", "Failed to load card types");
+    }
+  };
+
+  const handleGameSettingsBack = () => {
+    setShowGameSettings(false);
+    setSelectedCardTypeId(null);
+  };
+
+  const handleStartGame = (settings: {
+    cardTypeId: string;
+    team1: string;
+    team2: string;
+    gameTime: number;
+    rounds: number;
+    passLimit: number;
+  }) => {
+    setGameSettings(settings);
+    setShowGameSettings(false);
+    setShowGame(true);
+  };
+
+  const handleGameBack = () => {
+    setShowGame(false);
+    setGameSettings(null);
+  };
+
+  const handleSettingsBack = () => {
+    setShowSettings(false);
+  };
+
   if (isCheckingSession) {
     return (
       <View style={styles.loadingContainer}>
@@ -169,6 +229,34 @@ export default function Index() {
         onAlreadyHaveAccount={handleAlreadyHaveAccount}
         onContinueAsGuest={handleContinueAsGuest}
         isSigningIn={isSigningIn}
+      />
+    );
+  }
+
+  if (showGame && gameSettings) {
+    return (
+      <GameScreen
+        cardTypeId={gameSettings.cardTypeId}
+        team1={gameSettings.team1}
+        team2={gameSettings.team2}
+        gameTime={gameSettings.gameTime}
+        rounds={gameSettings.rounds}
+        passLimit={gameSettings.passLimit}
+        onBack={handleGameBack}
+      />
+    );
+  }
+
+  if (showSettings) {
+    return <SettingsScreen onBack={handleSettingsBack} />;
+  }
+
+  if (showGameSettings && selectedCardTypeId) {
+    return (
+      <GameSettingsScreen
+        cardTypeId={selectedCardTypeId}
+        onBack={handleGameSettingsBack}
+        onStartGame={handleStartGame}
       />
     );
   }
@@ -193,14 +281,18 @@ export default function Index() {
         style={styles.homeContainer}
       >
         <View style={styles.headerRow}>
-          <View style={styles.avatarContainer}>
+          <View style={styles.avatarSpacer} />
+          <Text style={styles.newCardsText}>NEW CARDS!</Text>
+          <TouchableOpacity
+            style={styles.avatarContainer}
+            onPress={() => setShowSettings(true)}
+            activeOpacity={0.8}
+          >
             <View style={styles.avatarCircle}>
               <Text style={styles.avatarText}>{initials}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
-
-        <Text style={styles.newCardsText}>NEW CARDS!</Text>
 
         <ScrollView
           horizontal
@@ -208,7 +300,7 @@ export default function Index() {
           contentContainerStyle={styles.cardsScrollContainer}
           style={styles.cardsScrollView}
         >
-          <View style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={handleSeriesCardPress} activeOpacity={0.8}>
             <LinearGradient
               colors={["#752AC3CC", "#38145DCC"]}
               style={styles.cardGradient}
@@ -233,7 +325,7 @@ export default function Index() {
                 <Text style={styles.buyButtonText}>FREE</Text>
               </View>
             </LinearGradient>
-          </View>
+          </TouchableOpacity>
         </ScrollView>
 
         <View style={styles.bottomTab}>
@@ -278,12 +370,22 @@ const styles = StyleSheet.create({
   },
   headerRow: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
+    alignItems: "center",
     width: "100%",
     marginBottom: 0,
+    marginTop: 8,
+    position: "relative",
   },
   avatarContainer: {
     alignItems: "flex-end",
+    width: 36,
+    justifyContent: "center",
+    alignSelf: "flex-start",
+    marginTop: 2,
+  },
+  avatarSpacer: {
+    width: 36,
   },
   avatarCircle: {
     width: 36,
@@ -305,8 +407,8 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
     fontWeight: "700",
     marginBottom: 12,
-    marginTop: -8,
     textAlign: "center",
+    flex: 1,
     textShadowColor: "rgba(0, 0, 0, 0.5)",
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
