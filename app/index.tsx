@@ -24,6 +24,7 @@ export default function Index() {
   const [showHome, setShowHome] = useState(false);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
     const checkSession = async () => {
@@ -38,6 +39,13 @@ export default function Index() {
         }
 
         if (session) {
+          // Get user name from session
+          const name =
+            session.user.user_metadata?.name ||
+            session.user.user_metadata?.full_name ||
+            session.user.email?.split("@")[0] ||
+            "GU";
+          setUserName(name);
           setShowOnboarding(false);
           setShowLogin(false);
           setShowHome(true);
@@ -58,6 +66,12 @@ export default function Index() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
+        const name =
+          session.user.user_metadata?.name ||
+          session.user.user_metadata?.full_name ||
+          session.user.email?.split("@")[0] ||
+          "GU";
+        setUserName(name);
         setShowOnboarding(false);
         setShowLogin(false);
         setShowHome(true);
@@ -160,10 +174,33 @@ export default function Index() {
   }
 
   if (showHome) {
+    // Get initials from user name
+    const getInitials = (name: string) => {
+      if (!name) return "GU";
+      const parts = name.trim().split(" ");
+      if (parts.length >= 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+      return name.substring(0, 2).toUpperCase();
+    };
+
+    const initials = getInitials(userName);
+
     return (
-      <View style={styles.homeContainer}>
-        <Text style={styles.homeText}>{t("home_title")}</Text>
-        <Text style={styles.homeSubtext}>{t("home_welcome")}</Text>
+      <LinearGradient
+        colors={["#2A0A3A", "#441063"]}
+        locations={[0, 0.79]}
+        style={styles.homeContainer}
+      >
+        <View style={styles.headerRow}>
+          <View style={styles.avatarContainer}>
+            <View style={styles.avatarCircle}>
+              <Text style={styles.avatarText}>{initials}</Text>
+            </View>
+          </View>
+        </View>
+
+        <Text style={styles.newCardsText}>NEW CARDS!</Text>
 
         <ScrollView
           horizontal
@@ -199,17 +236,27 @@ export default function Index() {
           </View>
         </ScrollView>
 
-        <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut} activeOpacity={0.8}>
-          <LinearGradient
-            colors={["#B47FE9", "#FFD17A"]}
-            style={styles.signOutButtonGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-          >
-            <Text style={styles.signOutButtonText}>{t("sign_out_button")}</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.bottomTab}>
+          <TouchableOpacity style={styles.tabButton} activeOpacity={0.8}>
+            <View style={styles.iconCircle}>
+              <Ionicons name="home" size={24} color="#FBAA12" />
+            </View>
+            <Text style={styles.tabLabel}>HOME</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tabButton} activeOpacity={0.8}>
+            <View style={styles.iconCircle}>
+              <Ionicons name="play" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={styles.tabLabel}>PLAY NOW</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tabButton} activeOpacity={0.8}>
+            <View style={styles.iconCircle}>
+              <Ionicons name="time-outline" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={styles.tabLabel}>RECENT</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     );
   }
 
@@ -225,21 +272,44 @@ const styles = StyleSheet.create({
   },
   homeContainer: {
     flex: 1,
-    backgroundColor: "#2A0A3B",
-    paddingTop: 60,
+    paddingTop: 50,
     paddingHorizontal: 20,
+    paddingBottom: 0,
   },
-  homeText: {
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    width: "100%",
+    marginBottom: 0,
+  },
+  avatarContainer: {
+    alignItems: "flex-end",
+  },
+  avatarCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#FBAA12",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  avatarText: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#FBAA12",
+    fontFamily: FONT_FAMILY,
+  },
+  newCardsText: {
     fontSize: 32,
-    color: "#8D64AB",
+    color: "#997EAF",
     fontFamily: FONT_FAMILY,
-    marginBottom: 8,
-  },
-  homeSubtext: {
-    fontSize: 18,
-    color: "#FFFFFF",
-    fontFamily: FONT_FAMILY,
-    marginBottom: 24,
+    fontWeight: "700",
+    marginBottom: 12,
+    marginTop: -8,
+    textAlign: "center",
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   cardsScrollView: {
     marginHorizontal: -20,
@@ -341,25 +411,40 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
     fontWeight: "700",
   },
-  signOutButton: {
-    width: 80,
-    height: 24,
-    borderRadius: 12,
-    overflow: "hidden",
-    bottom: 20,
-    marginTop: 0,
-    alignSelf: "center",
+  bottomTab: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 86,
+    backgroundColor: "#2C093E",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingBottom: 0,
+    borderTopWidth: 0,
+    borderTopLeftRadius: 48,
+    borderTopRightRadius: 48,
   },
-  signOutButtonGradient: {
-    width: "100%",
-    height: "100%",
+  tabButton: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    height: "100%",
+    paddingVertical: 0,
   },
-  signOutButtonText: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#FFFFFF",
+  iconCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "#60476d",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+  tabLabel: {
+    fontSize: 10,
+    color: "#B2AEBB",
     fontFamily: FONT_FAMILY,
   },
 });

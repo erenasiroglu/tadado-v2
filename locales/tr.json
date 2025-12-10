@@ -33,5 +33,8 @@
   "welcome": "HOŞ GELDİNİZ",
   "login_screen_subtitle": "Devam Etmek İçin Giriş Yapın Veya Kayıt Olun",
   "already_have_account": "Zaten hesabınız var mı",
-  "continue_as_guest": "Misafir Olarak Devam Et?"
+  "continue_as_guest": "Misafir Olarak Devam Et?",
+  "ready_to_party": "Partiye hazır mısın",
+  "sign_in_with_google": "Google ile giriş yap",
+  "sign_in_with_apple": "Apple ile giriş yap"
 }
