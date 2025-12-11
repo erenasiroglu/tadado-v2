@@ -366,21 +366,25 @@ export default function Index() {
         locations={[0, 0.79]}
         style={styles.homeContainer}
       >
-        <View style={styles.contentWrapper}>
-          <View style={styles.headerRow}>
-            <View style={styles.avatarSpacer} />
-            <Text style={styles.newCardsText}>NEW CARDS!</Text>
-            <TouchableOpacity
-              style={styles.avatarContainer}
-              onPress={() => setShowSettings(true)}
-              activeOpacity={0.8}
-            >
-              <View style={styles.avatarCircle}>
-                <Text style={styles.avatarText}>{initials}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.headerRow}>
+          <View style={styles.avatarSpacer} />
+          <Text style={styles.newCardsText}>NEW CARDS!</Text>
+          <TouchableOpacity
+            style={styles.avatarContainer}
+            onPress={() => setShowSettings(true)}
+            activeOpacity={0.8}
+          >
+            <View style={styles.avatarCircle}>
+              <Text style={styles.avatarText}>{initials}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
+        <ScrollView
+          style={styles.mainScrollView}
+          contentContainerStyle={styles.mainScrollContent}
+          showsVerticalScrollIndicator={false}
+        >
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -568,7 +572,7 @@ export default function Index() {
 
                 <Text style={styles.cardTitleMarvel}>MARVEL</Text>
 
-                <Text style={styles.cardSubtitleMarvel}>Superheroes Universe!</Text>
+                <Text style={styles.cardSubtitleMarvel}>Superheroes stories!</Text>
 
                 <View style={styles.buyButtonMarvel}>
                   <Text style={styles.buyButtonTextMarvel}>BUY 4.99$</Text>
@@ -581,24 +585,15 @@ export default function Index() {
 
           <TouchableOpacity
             style={styles.aiCreateCard}
-            onPress={() => router.push("/ai-create" as any)}
+            onPress={() => router.push("/ai-create")}
             activeOpacity={0.8}
           >
-            <View style={styles.aiCreateCardContent}>
-              <View style={styles.aiCreateCardLeft}>
-                <View style={styles.magicWithTadoContainer}>
-                  <Text style={styles.magicWithTadoText}>Magic With TADO!</Text>
-                </View>
-                <TouchableOpacity
-                  style={styles.createButton}
-                  onPress={(e) => {
-                    e.stopPropagation();
-                    router.push("/ai-create" as any);
-                  }}
-                  activeOpacity={0.8}
-                >
+            <View style={styles.aiCreateContent}>
+              <View style={styles.aiCreateLeft}>
+                <Text style={styles.magicWithTadoText}>Magic With TADO!</Text>
+                <View style={styles.createButton}>
                   <Text style={styles.createButtonText}>CREATE</Text>
-                </TouchableOpacity>
+                </View>
               </View>
               <Image
                 source={require("@/assets/images/tado_ai.png")}
@@ -607,7 +602,41 @@ export default function Index() {
               />
             </View>
           </TouchableOpacity>
-        </View>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.smallCardsScrollContainer}
+            style={styles.smallCardsScrollView}
+          >
+            <View style={styles.smallCard}>
+              <View style={styles.classicTitleContainer}>
+                <Text style={styles.smallCardTitleClassic}>CLASSIC</Text>
+                <Text style={styles.smallCardTitleClassic}>FUN!</Text>
+              </View>
+              <View style={styles.previewButton}>
+                <Text style={styles.previewButtonText}>PREVIEW</Text>
+              </View>
+            </View>
+
+            <View style={[styles.smallCard, styles.smallCardMargin, styles.smallCardDirty]}>
+              <Text style={styles.smallCardTitleDirty}>DIRTY MINDS</Text>
+              <View style={styles.ageBadge}>
+                <Text style={styles.ageBadgeText}>+18</Text>
+              </View>
+              <View style={styles.previewButtonDirty}>
+                <Text style={styles.previewButtonTextDirty}>PREVIEW</Text>
+              </View>
+            </View>
+
+            <View style={[styles.smallCard, styles.smallCardMargin, styles.smallCardOwn]}>
+              <Text style={styles.smallCardTitleOwn}>YOUR OWN STYLE!</Text>
+              <View style={styles.previewButtonOwn}>
+                <Text style={styles.previewButtonTextOwn}>PREVIEW</Text>
+              </View>
+            </View>
+          </ScrollView>
+        </ScrollView>
 
         <View style={styles.bottomTab}>
           <TouchableOpacity style={styles.tabButton} activeOpacity={0.8}>
@@ -646,11 +675,14 @@ const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
     paddingTop: 50,
-    paddingHorizontal: 20,
-    paddingBottom: 280,
+    paddingHorizontal: 12,
+    paddingBottom: 0,
   },
-  contentWrapper: {
+  mainScrollView: {
     flex: 1,
+  },
+  mainScrollContent: {
+    paddingBottom: 100,
   },
   headerRow: {
     flexDirection: "row",
@@ -698,23 +730,29 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   cardsScrollView: {
-    marginHorizontal: -20,
-    paddingHorizontal: 20,
+    marginHorizontal: -12,
+    paddingHorizontal: 12,
     marginBottom: 0,
+    marginTop: 0,
   },
   cardsScrollContainer: {
-    paddingRight: 20,
+    paddingRight: 12,
   },
   card: {
     width: 155,
     height: 223,
     borderRadius: 24,
-    overflow: "hidden",
     shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  cardInner: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 24,
+    overflow: "hidden",
   },
   cardMargin: {
     marginLeft: 16,
@@ -724,6 +762,8 @@ const styles = StyleSheet.create({
     height: "100%",
     padding: 12,
     position: "relative",
+    borderRadius: 24,
+    overflow: "hidden",
   },
   newBadge: {
     position: "absolute",
@@ -1179,44 +1219,48 @@ const styles = StyleSheet.create({
     color: "#997EAF",
     fontFamily: FONT_FAMILY,
     fontWeight: "700",
-    marginTop: 0,
-    marginBottom: 16,
+    marginTop: 16,
     marginLeft: 0,
-    textAlign: "left",
+    marginBottom: 12,
   },
   aiCreateCard: {
     width: 370,
+    maxWidth: "100%",
     height: 151,
     backgroundColor: "#150527",
     borderRadius: 24,
-    marginBottom: 20,
-    overflow: "hidden",
+    marginBottom: 8,
+    alignSelf: "flex-start",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 10,
   },
-  aiCreateCardContent: {
+  aiCreateContent: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingVertical: 16,
+    borderRadius: 24,
+    overflow: "hidden",
   },
-  aiCreateCardLeft: {
+  aiCreateLeft: {
     flex: 1,
-    height: "100%",
-    paddingTop: 8,
-    paddingBottom: 8,
     justifyContent: "space-between",
-  },
-  magicWithTadoContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-start",
+    height: "100%",
+    paddingVertical: 8,
   },
   magicWithTadoText: {
     fontSize: 24,
     color: "#FFFFFF",
     fontFamily: FONT_FAMILY,
     fontWeight: "700",
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   createButton: {
     width: 125,
@@ -1225,7 +1269,6 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "flex-start",
   },
   createButtonText: {
     fontSize: 14,
@@ -1236,6 +1279,127 @@ const styles = StyleSheet.create({
   tadoAiImage: {
     width: 120,
     height: 120,
-    marginRight: 10,
+  },
+  smallCardsScrollView: {
+    marginHorizontal: -12,
+    paddingHorizontal: 12,
+    marginTop: 8,
+    marginBottom: 0,
+    height: 184,
+  },
+  smallCardsScrollContainer: {
+    paddingRight: 12,
+  },
+  smallCard: {
+    width: 112,
+    height: 184,
+    borderRadius: 25,
+    backgroundColor: "#38145D",
+    padding: 12,
+    justifyContent: "space-between",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  smallCardMargin: {
+    marginLeft: 16,
+  },
+  smallCardDirty: {
+    backgroundColor: "#5D022C",
+  },
+  smallCardOwn: {
+    backgroundColor: "#FBAA12",
+  },
+  classicTitleContainer: {
+    alignItems: "center",
+  },
+  smallCardTitleClassic: {
+    marginTop: 12,
+    fontSize: 26,
+    color: "#FBAA12",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+    lineHeight: 40,
+  },
+  smallCardTitleDirty: {
+    marginTop: 12,
+    fontSize: 26,
+    color: "#D92151",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+    lineHeight: 40,
+  },
+  smallCardTitleOwn: {
+    fontSize: 26,
+    lineHeight: 40,
+    color: "#38145D",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  previewButton: {
+    width: 75,
+    height: 23,
+    backgroundColor: "#FBAA12",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  previewButtonText: {
+    fontSize: 12,
+    color: "#38145D",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  previewButtonDirty: {
+    width: 75,
+    height: 23,
+    backgroundColor: "#D92151",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  previewButtonTextDirty: {
+    fontSize: 12,
+    color: "#5D022C",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  previewButtonOwn: {
+    width: 75,
+    height: 23,
+    backgroundColor: "#38145D",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  previewButtonTextOwn: {
+    fontSize: 12,
+    color: "#FBAA12",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  ageBadge: {
+    width: 30,
+    height: 30,
+    backgroundColor: "#D92151",
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    marginVertical: 8,
+  },
+  ageBadgeText: {
+    fontSize: 12,
+    color: "#5D022C",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
   },
 });
