@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Alert,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -183,6 +184,91 @@ export default function Index() {
     }
   };
 
+  const handleCitiesCountriesCardPress = async () => {
+    try {
+      // CITIES_COUNTRIES kart tipinin ID'sini bul
+      const cardTypes = await gameService.getCardTypes();
+      const citiesCountriesCardType = cardTypes.find((ct) => ct.name === "CITIES_COUNTRIES");
+      if (citiesCountriesCardType) {
+        setSelectedCardTypeId(citiesCountriesCardType.id);
+        setShowGameSettings(true);
+      } else {
+        Alert.alert("Error", "CITIES_COUNTRIES card type not found");
+      }
+    } catch (error) {
+      console.error("Error loading card types:", error);
+      Alert.alert("Error", "Failed to load card types");
+    }
+  };
+
+  const handleSportCardPress = async () => {
+    try {
+      // SPORT kart tipinin ID'sini bul
+      const cardTypes = await gameService.getCardTypes();
+      const sportCardType = cardTypes.find((ct) => ct.name === "SPORT");
+      if (sportCardType) {
+        setSelectedCardTypeId(sportCardType.id);
+        setShowGameSettings(true);
+      } else {
+        Alert.alert("Error", "SPORT card type not found");
+      }
+    } catch (error) {
+      console.error("Error loading card types:", error);
+      Alert.alert("Error", "Failed to load card types");
+    }
+  };
+
+  const handleMidnightFunCardPress = async () => {
+    try {
+      // MIDNIGHT_FUN kart tipinin ID'sini bul
+      const cardTypes = await gameService.getCardTypes();
+      const midnightFunCardType = cardTypes.find((ct) => ct.name === "MIDNIGHT_FUN");
+      if (midnightFunCardType) {
+        setSelectedCardTypeId(midnightFunCardType.id);
+        setShowGameSettings(true);
+      } else {
+        Alert.alert("Error", "MIDNIGHT_FUN card type not found");
+      }
+    } catch (error) {
+      console.error("Error loading card types:", error);
+      Alert.alert("Error", "Failed to load card types");
+    }
+  };
+
+  const handleRomanceCardPress = async () => {
+    try {
+      // ROMANCE kart tipinin ID'sini bul
+      const cardTypes = await gameService.getCardTypes();
+      const romanceCardType = cardTypes.find((ct) => ct.name === "ROMANCE");
+      if (romanceCardType) {
+        setSelectedCardTypeId(romanceCardType.id);
+        setShowGameSettings(true);
+      } else {
+        Alert.alert("Error", "ROMANCE card type not found");
+      }
+    } catch (error) {
+      console.error("Error loading card types:", error);
+      Alert.alert("Error", "Failed to load card types");
+    }
+  };
+
+  const handleMarvelCardPress = async () => {
+    try {
+      // MARVEL kart tipinin ID'sini bul
+      const cardTypes = await gameService.getCardTypes();
+      const marvelCardType = cardTypes.find((ct) => ct.name === "MARVEL");
+      if (marvelCardType) {
+        setSelectedCardTypeId(marvelCardType.id);
+        setShowGameSettings(true);
+      } else {
+        Alert.alert("Error", "MARVEL card type not found");
+      }
+    } catch (error) {
+      console.error("Error loading card types:", error);
+      Alert.alert("Error", "Failed to load card types");
+    }
+  };
+
   const handleGameSettingsBack = () => {
     setShowGameSettings(false);
     setSelectedCardTypeId(null);
@@ -280,53 +366,248 @@ export default function Index() {
         locations={[0, 0.79]}
         style={styles.homeContainer}
       >
-        <View style={styles.headerRow}>
-          <View style={styles.avatarSpacer} />
-          <Text style={styles.newCardsText}>NEW CARDS!</Text>
+        <View style={styles.contentWrapper}>
+          <View style={styles.headerRow}>
+            <View style={styles.avatarSpacer} />
+            <Text style={styles.newCardsText}>NEW CARDS!</Text>
+            <TouchableOpacity
+              style={styles.avatarContainer}
+              onPress={() => setShowSettings(true)}
+              activeOpacity={0.8}
+            >
+              <View style={styles.avatarCircle}>
+                <Text style={styles.avatarText}>{initials}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.cardsScrollContainer}
+            style={styles.cardsScrollView}
+          >
+            <TouchableOpacity
+              style={styles.card}
+              onPress={handleSeriesCardPress}
+              activeOpacity={0.8}
+            >
+              <LinearGradient
+                colors={["#752AC3CC", "#38145DCC"]}
+                style={styles.cardGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <View style={styles.newBadge}>
+                  <Text style={styles.newBadgeText}>NEW</Text>
+                </View>
+
+                <View style={styles.playIconContainer}>
+                  <View style={styles.playIconCircle}>
+                    <Ionicons name="play" size={24} color="#FFFFFF" style={styles.playIcon} />
+                  </View>
+                </View>
+
+                <Text style={styles.cardTitle}>CINEMA</Text>
+
+                <Text style={styles.cardSubtitle}>Movies, series and actors!</Text>
+
+                <View style={styles.buyButton}>
+                  <Text style={styles.buyButtonText}>FREE</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.card, styles.cardMargin]}
+              onPress={handleCitiesCountriesCardPress}
+              activeOpacity={0.8}
+            >
+              <LinearGradient
+                colors={["#1B5E20CC", "#2E7D32CC"]}
+                style={styles.cardGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <View style={styles.newBadgeGreen}>
+                  <Text style={styles.newBadgeTextGreen}>NEW</Text>
+                </View>
+
+                <View style={styles.playIconContainer}>
+                  <View style={styles.playIconCircleGreen}>
+                    <Ionicons name="play" size={24} color="#FFFFFF" style={styles.playIcon} />
+                  </View>
+                </View>
+
+                <Text style={styles.cardTitleGreen}>TRAVEL</Text>
+
+                <Text style={styles.cardSubtitleGreen}>All cities and countries!</Text>
+
+                <View style={styles.buyButtonGreen}>
+                  <Text style={styles.buyButtonTextGreen}>FREE</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.card, styles.cardMargin]}
+              onPress={handleSportCardPress}
+              activeOpacity={0.8}
+            >
+              <LinearGradient
+                colors={["#FBC02DCC", "#FFD54FCC"]}
+                style={styles.cardGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <View style={styles.newBadgeSport}>
+                  <Text style={styles.newBadgeTextSport}>NEW</Text>
+                </View>
+
+                <View style={styles.playIconContainer}>
+                  <View style={styles.playIconCircleSport}>
+                    <Ionicons name="play" size={24} color="#FFFFFF" style={styles.playIcon} />
+                  </View>
+                </View>
+
+                <Text style={styles.cardTitleSport}>SPORT</Text>
+
+                <Text style={styles.cardSubtitleSport}>Football basketball and more!</Text>
+
+                <View style={styles.buyButtonSport}>
+                  <Text style={styles.buyButtonTextSport}>FREE</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.card, styles.cardMargin]}
+              onPress={handleMidnightFunCardPress}
+              activeOpacity={0.8}
+            >
+              <LinearGradient
+                colors={["#C3045DCC", "#5D022CCC"]}
+                locations={[0, 0.8]}
+                style={styles.cardGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+              >
+                <View style={styles.newBadgeMidnightFun}>
+                  <Text style={styles.newBadgeTextMidnightFun}>NEW</Text>
+                </View>
+
+                <View style={styles.playIconContainer}>
+                  <View style={styles.playIconCircleMidnightFun}>
+                    <Ionicons name="play" size={24} color="#FFFFFF" style={styles.playIcon} />
+                  </View>
+                </View>
+
+                <Text style={styles.cardTitleMidnightFun}>MIDNIGHT FUN</Text>
+
+                <Text style={styles.cardSubtitleMidnightFun}>Spicy Challenges for Couples!</Text>
+
+                <View style={styles.buyButtonMidnightFun}>
+                  <Text style={styles.buyButtonTextMidnightFun}>BUY 2.99$</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.card, styles.cardMargin]}
+              onPress={handleRomanceCardPress}
+              activeOpacity={0.8}
+            >
+              <LinearGradient
+                colors={["#D57C9DCC", "#FF2C7ACC"]}
+                locations={[0, 0.8]}
+                style={styles.cardGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+              >
+                <View style={styles.newBadgeRomance}>
+                  <Text style={styles.newBadgeTextRomance}>NEW</Text>
+                </View>
+
+                <View style={styles.playIconContainer}>
+                  <View style={styles.playIconCircleRomance}>
+                    <Ionicons name="play" size={24} color="#FFFFFF" style={styles.playIcon} />
+                  </View>
+                </View>
+
+                <Text style={styles.cardTitleRomance}>ROMANCE</Text>
+
+                <Text style={styles.cardSubtitleRomance}>Fun Game About Relationships!</Text>
+
+                <View style={styles.buyButtonRomance}>
+                  <Text style={styles.buyButtonTextRomance}>BUY 2.99$</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.card, styles.cardMargin]}
+              onPress={handleMarvelCardPress}
+              activeOpacity={0.8}
+            >
+              <LinearGradient
+                colors={["#C41E3ACC", "#ED1C24CC"]}
+                locations={[0, 0.8]}
+                style={styles.cardGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+              >
+                <View style={styles.newBadgeMarvel}>
+                  <Text style={styles.newBadgeTextMarvel}>NEW</Text>
+                </View>
+
+                <View style={styles.playIconContainer}>
+                  <View style={styles.playIconCircleMarvel}>
+                    <Ionicons name="play" size={24} color="#FFFFFF" style={styles.playIcon} />
+                  </View>
+                </View>
+
+                <Text style={styles.cardTitleMarvel}>MARVEL</Text>
+
+                <Text style={styles.cardSubtitleMarvel}>Superheroes Universe!</Text>
+
+                <View style={styles.buyButtonMarvel}>
+                  <Text style={styles.buyButtonTextMarvel}>BUY 4.99$</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <Text style={styles.createYourOwnCardText}>CREATE YOUR OWN CARD!</Text>
+
           <TouchableOpacity
-            style={styles.avatarContainer}
-            onPress={() => setShowSettings(true)}
+            style={styles.aiCreateCard}
+            onPress={() => router.push("/ai-create" as any)}
             activeOpacity={0.8}
           >
-            <View style={styles.avatarCircle}>
-              <Text style={styles.avatarText}>{initials}</Text>
+            <View style={styles.aiCreateCardContent}>
+              <View style={styles.aiCreateCardLeft}>
+                <View style={styles.magicWithTadoContainer}>
+                  <Text style={styles.magicWithTadoText}>Magic With TADO!</Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.createButton}
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    router.push("/ai-create" as any);
+                  }}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.createButtonText}>CREATE</Text>
+                </TouchableOpacity>
+              </View>
+              <Image
+                source={require("@/assets/images/tado_ai.png")}
+                style={styles.tadoAiImage}
+                resizeMode="contain"
+              />
             </View>
           </TouchableOpacity>
         </View>
-
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.cardsScrollContainer}
-          style={styles.cardsScrollView}
-        >
-          <TouchableOpacity style={styles.card} onPress={handleSeriesCardPress} activeOpacity={0.8}>
-            <LinearGradient
-              colors={["#752AC3CC", "#38145DCC"]}
-              style={styles.cardGradient}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            >
-              <View style={styles.newBadge}>
-                <Text style={styles.newBadgeText}>NEW</Text>
-              </View>
-
-              <View style={styles.playIconContainer}>
-                <View style={styles.playIconCircle}>
-                  <Ionicons name="play" size={24} color="#FFFFFF" style={styles.playIcon} />
-                </View>
-              </View>
-
-              <Text style={styles.cardTitle}>SERIES</Text>
-
-              <Text style={styles.cardSubtitle}>Popular series and movies!</Text>
-
-              <View style={styles.buyButton}>
-                <Text style={styles.buyButtonText}>FREE</Text>
-              </View>
-            </LinearGradient>
-          </TouchableOpacity>
-        </ScrollView>
 
         <View style={styles.bottomTab}>
           <TouchableOpacity style={styles.tabButton} activeOpacity={0.8}>
@@ -366,7 +647,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 20,
-    paddingBottom: 0,
+    paddingBottom: 280,
+  },
+  contentWrapper: {
+    flex: 1,
   },
   headerRow: {
     flexDirection: "row",
@@ -416,6 +700,7 @@ const styles = StyleSheet.create({
   cardsScrollView: {
     marginHorizontal: -20,
     paddingHorizontal: 20,
+    marginBottom: 0,
   },
   cardsScrollContainer: {
     paddingRight: 20,
@@ -425,6 +710,11 @@ const styles = StyleSheet.create({
     height: 223,
     borderRadius: 24,
     overflow: "hidden",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   cardMargin: {
     marginLeft: 16,
@@ -490,7 +780,7 @@ const styles = StyleSheet.create({
     left: 12,
     right: 12,
     fontSize: 11,
-    color: "#FBAA12A6",
+    color: "#BC7734",
     fontFamily: FONT_FAMILY,
     textAlign: "center",
     opacity: 0.65,
@@ -510,6 +800,341 @@ const styles = StyleSheet.create({
   buyButtonText: {
     fontSize: 11,
     color: "#38145D",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  // Green card specific styles
+  newBadgeGreen: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    width: 54,
+    height: 23,
+    backgroundColor: "#4CAF50",
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  newBadgeTextGreen: {
+    fontSize: 12,
+    color: "#FFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  playIconCircleGreen: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#4CAF50",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardTitleGreen: {
+    position: "absolute",
+    top: 130,
+    left: 12,
+    right: 12,
+    fontSize: 18,
+    color: "#A5D6A7",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  cardSubtitleGreen: {
+    position: "absolute",
+    top: 155,
+    left: 12,
+    right: 12,
+    fontSize: 11,
+    color: "#81C784",
+    fontFamily: FONT_FAMILY,
+    textAlign: "center",
+    opacity: 0.8,
+    lineHeight: 14,
+  },
+  buyButtonGreen: {
+    position: "absolute",
+    bottom: 12,
+    left: 42.5,
+    width: 70,
+    height: 23,
+    backgroundColor: "#4CAF50",
+    borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buyButtonTextGreen: {
+    fontSize: 11,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  // Sport card specific styles
+  newBadgeSport: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    width: 54,
+    height: 23,
+    backgroundColor: "#FFC107",
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  newBadgeTextSport: {
+    fontSize: 12,
+    color: "#38145D",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  playIconCircleSport: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#FFC107",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardTitleSport: {
+    position: "absolute",
+    top: 130,
+    left: 12,
+    right: 12,
+    fontSize: 18,
+    color: "#38145D",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  cardSubtitleSport: {
+    position: "absolute",
+    top: 155,
+    left: 12,
+    right: 12,
+    fontSize: 11,
+    color: "#5C3145",
+    fontFamily: FONT_FAMILY,
+    textAlign: "center",
+    opacity: 0.8,
+    lineHeight: 14,
+  },
+  buyButtonSport: {
+    position: "absolute",
+    bottom: 12,
+    left: 42.5,
+    width: 70,
+    height: 23,
+    backgroundColor: "#FFC107",
+    borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buyButtonTextSport: {
+    fontSize: 11,
+    color: "#38145D",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  // Midnight Fun card specific styles
+  newBadgeMidnightFun: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    width: 54,
+    height: 23,
+    backgroundColor: "#C3045D",
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  newBadgeTextMidnightFun: {
+    fontSize: 12,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  playIconCircleMidnightFun: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#C3045D",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardTitleMidnightFun: {
+    position: "absolute",
+    top: 130,
+    left: 12,
+    right: 12,
+    fontSize: 18,
+    color: "#D92151",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  cardSubtitleMidnightFun: {
+    position: "absolute",
+    top: 155,
+    left: 12,
+    right: 12,
+    fontSize: 11,
+    color: "#D92151",
+    fontFamily: FONT_FAMILY,
+    textAlign: "center",
+    opacity: 0.8,
+    lineHeight: 14,
+  },
+  buyButtonMidnightFun: {
+    position: "absolute",
+    bottom: 12,
+    left: 42.5,
+    width: 70,
+    height: 23,
+    backgroundColor: "#C3045D",
+    borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buyButtonTextMidnightFun: {
+    fontSize: 11,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  // Romance card specific styles
+  newBadgeRomance: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    width: 54,
+    height: 23,
+    backgroundColor: "#FF2C7A",
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  newBadgeTextRomance: {
+    fontSize: 12,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  playIconCircleRomance: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#FF2C7A",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardTitleRomance: {
+    position: "absolute",
+    top: 130,
+    left: 12,
+    right: 12,
+    fontSize: 18,
+    color: "#5D022C",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  cardSubtitleRomance: {
+    position: "absolute",
+    top: 155,
+    left: 12,
+    right: 12,
+    fontSize: 11,
+    color: "#831747",
+    fontFamily: FONT_FAMILY,
+    textAlign: "center",
+    opacity: 0.9,
+    lineHeight: 14,
+  },
+  buyButtonRomance: {
+    position: "absolute",
+    bottom: 12,
+    left: 42.5,
+    width: 70,
+    height: 23,
+    backgroundColor: "#5D022C",
+    borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buyButtonTextRomance: {
+    fontSize: 11,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  // Marvel card specific styles
+  newBadgeMarvel: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    width: 54,
+    height: 23,
+    backgroundColor: "#ED1C24",
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  newBadgeTextMarvel: {
+    fontSize: 12,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  playIconCircleMarvel: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#ED1C24",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardTitleMarvel: {
+    position: "absolute",
+    top: 130,
+    left: 12,
+    right: 12,
+    fontSize: 18,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  cardSubtitleMarvel: {
+    position: "absolute",
+    top: 155,
+    left: 12,
+    right: 12,
+    fontSize: 11,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    textAlign: "center",
+    opacity: 0.9,
+    lineHeight: 14,
+  },
+  buyButtonMarvel: {
+    position: "absolute",
+    bottom: 12,
+    left: 42.5,
+    width: 70,
+    height: 23,
+    backgroundColor: "#ED1C24",
+    borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buyButtonTextMarvel: {
+    fontSize: 11,
+    color: "#FFFFFF",
     fontFamily: FONT_FAMILY,
     fontWeight: "700",
   },
@@ -548,5 +1173,69 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#B2AEBB",
     fontFamily: FONT_FAMILY,
+  },
+  createYourOwnCardText: {
+    fontSize: 24,
+    color: "#997EAF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+    marginTop: 0,
+    marginBottom: 16,
+    marginLeft: 0,
+    textAlign: "left",
+  },
+  aiCreateCard: {
+    width: 370,
+    height: 151,
+    backgroundColor: "#150527",
+    borderRadius: 24,
+    marginBottom: 20,
+    overflow: "hidden",
+  },
+  aiCreateCardContent: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  aiCreateCardLeft: {
+    flex: 1,
+    height: "100%",
+    paddingTop: 8,
+    paddingBottom: 8,
+    justifyContent: "space-between",
+  },
+  magicWithTadoContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  magicWithTadoText: {
+    fontSize: 24,
+    color: "#FFFFFF",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  createButton: {
+    width: 125,
+    height: 32,
+    backgroundColor: "#38145D",
+    borderRadius: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "flex-start",
+  },
+  createButtonText: {
+    fontSize: 14,
+    color: "#FBAA12",
+    fontFamily: FONT_FAMILY,
+    fontWeight: "700",
+  },
+  tadoAiImage: {
+    width: 120,
+    height: 120,
+    marginRight: 10,
   },
 });
